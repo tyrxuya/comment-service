@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,8 @@ public class HotelServiceImpl implements HotelService {
                 .firstName("vanio")
                 .lastName("ivanov")
                 .id("12312")
-                .publishDate(LocalDateTime.of(2024, 7, 9, 21, 15))
-                .lastEditedDate(LocalDateTime.of(2024, 7, 9, 21, 15))
+                .publishDate(LocalDate.now().plusDays(3))
+                .lastEditedDate(LocalDate.now().plusDays(3))
                 .lastEditedBy("admin")
                 .build()
         );
@@ -42,8 +43,8 @@ public class HotelServiceImpl implements HotelService {
                 .firstName("vanio")
                 .lastName("ivanov")
                 .id("12313")
-                .publishDate(LocalDateTime.of(2024, 7, 9, 21, 20))
-                .lastEditedDate(LocalDateTime.of(2024, 7, 9, 21, 20))
+                .publishDate(LocalDate.of(2024, 7, 9))
+                .lastEditedDate(LocalDate.of(2024, 7, 9))
                 .lastEditedBy("petia")
                 .build()
         );

@@ -12,7 +12,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@SpringBootTest
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 class SystemControllerTest {
     @Autowired
@@ -22,7 +27,7 @@ class SystemControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void shouldRespondWithOkAndAdminEditCommentOutput() throws Exception {
+    void givenAdminEditCommentInputWithPathVariable_whenMockMVC_thenResponseOk() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -31,29 +36,29 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNotEmpty());
     }
 
     @Test
-    void shouldRespondWithOkAndDeleteCommentOutput() throws Exception {
+    void givenDeleteCommentInputWithPathVariable_whenMockMVC_thenResponseOk() throws Exception {
         DeleteCommentInput input = DeleteCommentInput.builder()
                 .roomId("15")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(delete(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(status().isOk());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenRoomNoIsInvalid() throws Exception {
+    void givenAdminEditCommentInput_whenRoomNoIsBlank_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo(" ")
@@ -62,15 +67,15 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenFirstNameIsBlank() throws Exception {
+    void givenAdminEditCommentInput_whenFirstNameIsBlank_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -79,15 +84,15 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenFirstNameIsLessThanMin() throws Exception {
+    void givenAdminEditCommentInput_whenFirstNameIsLessThanMin_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -96,15 +101,15 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenFirstNameIsMoreThanMax() throws Exception {
+    void givenAdminEditCommentInput_whenFirstNameIsMoreThanMax_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -113,32 +118,32 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenLastNameIsBlank() throws Exception {
+    void givenAdminEditCommentInput_whenLastNameIsBlank_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
-                .firstName("     ")
-                .lastName("doe")
+                .firstName("vanio")
+                .lastName("       ")
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenLastNameIsLessThanMin() throws Exception {
+    void givenAdminEditCommentInput_whenLastNameIsLessThanMin_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -147,15 +152,15 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenLastNameIsMoreThanMax() throws Exception {
+    void givenAdminEditCommentInput_whenLastNameIsMoreThanMax_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -164,15 +169,15 @@ class SystemControllerTest {
                 .content("nqkakuv komentar")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenContentIsBlank() throws Exception {
+    void givenAdminEditCommentInput_whenContentIsBlank_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -181,15 +186,15 @@ class SystemControllerTest {
                 .content("     ")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenContentIsLessThanMin() throws Exception {
+    void givenAdminEditCommentInput_whenContentIsLessThanMin_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -198,15 +203,15 @@ class SystemControllerTest {
                 .content("")
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 
     @Test
-    void shouldRespondWithImATeapotWhenContentIsMoreThanMax() throws Exception {
+    void givenAdminEditCommentInput_whenContentIsMoreThanMax_thenResponseIAmATeapot() throws Exception {
         AdminEditCommentInput input = AdminEditCommentInput.builder()
                 .commentId("1234")
                 .roomNo("15")
@@ -220,10 +225,10 @@ class SystemControllerTest {
                         """) //201
                 .build();
 
-        mockMvc.perform(MockMvcRequestBuilders.put(RestApiPaths.SYSTEM + "/comment/12")
+        mockMvc.perform(put(RestApiPaths.SYSTEM + "/comment/12")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(input)))
-                .andExpect(MockMvcResultMatchers.status().isIAmATeapot());
+                .andExpect(status().isIAmATeapot());
     }
 }

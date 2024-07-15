@@ -24,6 +24,6 @@ public class CreateCommentInput {
     private String lastName;
 
     @NotBlank(message = "content cannot be blank!")
-    @Size(max = 200, message = "content cannot be over 200 symbols!")
+    @Size(min = 1, max = 200, message = "content cannot be over 200 symbols!")
     private String content;
 }

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -30,10 +31,10 @@ public class CommentsOutput {
     private String content;
 
     //@Future(message = "invalid publishDate!")
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
 
     //@Future(message = "invalid lastEditedDate!")
-    private LocalDateTime lastEditedDate;
+    private LocalDate lastEditedDate;
 
     //@NotBlank(message = "lastEditedBy cannot be blank!")
     private String lastEditedBy;
