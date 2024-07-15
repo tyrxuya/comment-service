@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(basePackageClasses = {HotelController.class, SystemController.class})
 @Slf4j
-@AllArgsConstructor
 public class GlobalExceptionHandler {
     private final ErrorHandler errorHandler;
+
+    public GlobalExceptionHandler(ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorsList> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,

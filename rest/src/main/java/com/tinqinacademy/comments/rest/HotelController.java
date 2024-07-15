@@ -23,27 +23,32 @@ public class HotelController {
     private final HotelService hotelService;
     private final ObjectMapper objectMapper;
 
-    @GetMapping(Endpoint.GET_COMMENT)
+    @GetMapping(RestApiPaths.GET_COMMENT)
     public ResponseEntity<GetCommentsOutput> getComments(@PathVariable String roomId) {
         GetCommentsInput input = GetCommentsInput.builder()
                 .roomId(roomId)
                 .build();
-        return new ResponseEntity<>(hotelService.getComments(input), HttpStatus.OK);
+
+        GetCommentsOutput result = hotelService.getComments(input);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping(Endpoint.CREATE_COMMENT)
+    @PostMapping(RestApiPaths.CREATE_COMMENT)
     public ResponseEntity<CreateCommentOutput> createComment(@PathVariable String roomId,
                                                              @RequestBody @Valid CreateCommentInput input) {
         input = input.toBuilder()
                 .roomId(roomId)
                 .build();
 
-        return new ResponseEntity<>(hotelService.createComment(input), HttpStatus.CREATED);
+        CreateCommentOutput result = hotelService.createComment(input); //!!!
+
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @PatchMapping(Endpoint.USER_EDIT_COMMENT)
+    @PatchMapping(RestApiPaths.USER_EDIT_COMMENT)
     public ResponseEntity<UserEditCommentOutput> userEditComment(@PathVariable String commentId,
                                                                  @RequestBody @Valid UserEditCommentInput input) {
-        return new ResponseEntity<>(hotelService.userEditComment(input), HttpStatus.OK);
+        UserEditCommentOutput result = hotelService.userEditComment(input);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

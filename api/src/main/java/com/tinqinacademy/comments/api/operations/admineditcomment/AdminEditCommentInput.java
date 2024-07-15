@@ -33,6 +33,6 @@ public class AdminEditCommentInput {
 
     @Schema(example = "tazi staq e mn qka")
     @NotBlank(message = "content cannot be blank!")
-    @Size(max = 200, message = "content cannot be over 200 symbols!")
+    @Size(min = 1, max = 200, message = "content cannot be over 200 symbols!")
     private String content;
 }

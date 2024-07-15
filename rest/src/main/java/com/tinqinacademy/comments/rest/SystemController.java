@@ -8,7 +8,6 @@ import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentInpu
 import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentOutput;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,15 +22,17 @@ public class SystemController {
     private final SystemService commentService;
     private final ObjectMapper objectMapper;
 
-    @PutMapping(Endpoint.ADMIN_EDIT_COMMENT)
+    @PutMapping(RestApiPaths.ADMIN_EDIT_COMMENT)
     public ResponseEntity<AdminEditCommentOutput> adminEditComment(@PathVariable String commentId,
                                                                    @RequestBody @Valid AdminEditCommentInput input) {
-        return new ResponseEntity<>(commentService.adminEditComment(input), HttpStatus.OK);
+        AdminEditCommentOutput result = commentService.adminEditComment(input);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping(Endpoint.DELETE_COMMENT)
+    @DeleteMapping(RestApiPaths.DELETE_COMMENT)
     public ResponseEntity<DeleteCommentOutput> deleteComment(@PathVariable String commentId,
                                                              @RequestBody @Valid DeleteCommentInput input) {
-        return new ResponseEntity<>(commentService.deleteComment(input), HttpStatus.OK);
+        DeleteCommentOutput result = commentService.deleteComment(input);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

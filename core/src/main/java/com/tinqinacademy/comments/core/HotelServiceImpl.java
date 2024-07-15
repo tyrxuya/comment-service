@@ -9,6 +9,7 @@ import com.tinqinacademy.comments.api.operations.getcomments.GetCommentsOutput;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentInput;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentOutput;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 public class HotelServiceImpl implements HotelService {
     @Override
     public GetCommentsOutput getComments(GetCommentsInput input) {

@@ -5,12 +5,13 @@ import com.tinqinacademy.comments.api.errors.Error;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class ErrorHandlerImpl implements ErrorHandler {
 
     @Override
