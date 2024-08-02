@@ -5,7 +5,7 @@
     <artifactId>rest</artifactId>
 
     <parent>
-        <groupId>com.tinqinacademy</groupId>
+        <groupId>com.tinqinacademy.comments</groupId>
         <artifactId>comments</artifactId>
         <version>${revision}</version>
     </parent>
