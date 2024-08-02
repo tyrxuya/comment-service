@@ -1,6 +1,7 @@
 package com.tinqinacademy.comments.api.operations.createcomment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tinqinacademy.comments.api.base.OperationInput;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 @Setter
 @Builder(toBuilder = true)
 @ToString
-public class CreateCommentInput {
+public class CreateCommentInput implements OperationInput {
     @JsonIgnore
     private String roomId;
 

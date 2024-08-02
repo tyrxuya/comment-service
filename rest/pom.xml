@@ -12,7 +12,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.tinqinacademy</groupId>
+            <groupId>com.tinqinacademy.comments</groupId>
             <artifactId>core</artifactId>
             <version>${revision}</version>
         </dependency>

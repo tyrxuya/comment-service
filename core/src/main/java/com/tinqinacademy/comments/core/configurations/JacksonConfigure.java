@@ -1,4 +1,4 @@
-package com.tinqinacademy.comments.core;
+package com.tinqinacademy.comments.core.configurations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.getcomments;
 
+import com.tinqinacademy.comments.api.base.OperationOutput;
 import com.tinqinacademy.comments.api.operations.comments.CommentsOutput;
 import jakarta.validation.Valid;
 import lombok.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Setter
 @Builder
 @ToString
-public class GetCommentsOutput {
+public class GetCommentsOutput implements OperationOutput {
     //@Valid
     private List<CommentsOutput> comments;
 }

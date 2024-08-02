@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.deletecomment;
 
+import com.tinqinacademy.comments.api.base.OperationInput;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -10,7 +11,7 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class DeleteCommentInput {
+public class DeleteCommentInput implements OperationInput {
     @NotBlank(message = "roomId cannot be blank!")
     private String roomId;
 }

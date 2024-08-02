@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.usereditcomment;
 
+import com.tinqinacademy.comments.api.base.OperationOutput;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class UserEditCommentOutput {
+public class UserEditCommentOutput implements OperationOutput {
     //@NotBlank(message = "id cannot be blank!")
     private String id;
 }

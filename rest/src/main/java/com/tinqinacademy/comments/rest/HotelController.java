@@ -1,13 +1,17 @@
 package com.tinqinacademy.comments.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tinqinacademy.comments.api.contracts.HotelService;
+import com.tinqinacademy.comments.api.errors.ErrorsList;
 import com.tinqinacademy.comments.api.operations.createcomment.CreateCommentInput;
+import com.tinqinacademy.comments.api.operations.createcomment.CreateCommentOperation;
 import com.tinqinacademy.comments.api.operations.createcomment.CreateCommentOutput;
 import com.tinqinacademy.comments.api.operations.getcomments.GetCommentsInput;
+import com.tinqinacademy.comments.api.operations.getcomments.GetCommentsOperation;
 import com.tinqinacademy.comments.api.operations.getcomments.GetCommentsOutput;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentInput;
+import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentOperation;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentOutput;
+import io.vavr.control.Either;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -19,36 +23,38 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "Hotel REST APIs")
 @RequiredArgsConstructor
-public class HotelController {
-    private final HotelService hotelService;
+public class HotelController extends BaseController {
+    private final GetCommentsOperation getCommentsOperation;
+    private final CreateCommentOperation createCommentOperation;
+    private final UserEditCommentOperation userEditCommentOperation;
     private final ObjectMapper objectMapper;
 
     @GetMapping(RestApiPaths.GET_COMMENT)
-    public ResponseEntity<GetCommentsOutput> getComments(@PathVariable String roomId) {
+    public ResponseEntity<?> getComments(@PathVariable String roomId) {
         GetCommentsInput input = GetCommentsInput.builder()
                 .roomId(roomId)
                 .build();
 
-        GetCommentsOutput result = hotelService.getComments(input);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        Either<ErrorsList, GetCommentsOutput> result = getCommentsOperation.process(input);
+        return getOutput(result, HttpStatus.OK);
     }
 
     @PostMapping(RestApiPaths.CREATE_COMMENT)
-    public ResponseEntity<CreateCommentOutput> createComment(@PathVariable String roomId,
-                                                             @RequestBody @Valid CreateCommentInput input) {
+    public ResponseEntity<?> createComment(@PathVariable String roomId,
+                                           @RequestBody CreateCommentInput input) {
         input = input.toBuilder()
                 .roomId(roomId)
                 .build();
 
-        CreateCommentOutput result = hotelService.createComment(input); //!!!
+        Either<ErrorsList, CreateCommentOutput> result = createCommentOperation.process(input); //!!!
 
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        return getOutput(result, HttpStatus.CREATED);
     }
 
     @PatchMapping(RestApiPaths.USER_EDIT_COMMENT)
-    public ResponseEntity<UserEditCommentOutput> userEditComment(@PathVariable String commentId,
-                                                                 @RequestBody @Valid UserEditCommentInput input) {
-        UserEditCommentOutput result = hotelService.userEditComment(input);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<?> userEditComment(@PathVariable String commentId,
+                                             @RequestBody UserEditCommentInput input) {
+        Either<ErrorsList, UserEditCommentOutput> result = userEditCommentOperation.process(input);
+        return getOutput(result, HttpStatus.OK);
     }
 }

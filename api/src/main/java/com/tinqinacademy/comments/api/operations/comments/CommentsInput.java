@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.comments;
 
+import com.tinqinacademy.comments.api.base.OperationInput;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Builder
-public class CommentsInput {
+public class CommentsInput implements OperationInput {
     @NotBlank(message = "id cannot be blank!")
     private String id;
 

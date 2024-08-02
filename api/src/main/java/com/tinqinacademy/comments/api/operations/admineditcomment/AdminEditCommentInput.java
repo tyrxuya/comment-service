@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.admineditcomment;
 
+import com.tinqinacademy.comments.api.base.OperationInput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +13,7 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class AdminEditCommentInput {
+public class AdminEditCommentInput implements OperationInput {
     @Schema(example = "10021")
     @NotBlank(message = "commentId cannot be blank!")
     private String commentId;

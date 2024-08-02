@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.admineditcomment;
 
+import com.tinqinacademy.comments.api.base.OperationOutput;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -9,6 +10,6 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class AdminEditCommentOutput {
+public class AdminEditCommentOutput implements OperationOutput {
     private String id;
 }

@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.api.operations.getcomments;
 
+import com.tinqinacademy.comments.api.base.OperationInput;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-public class GetCommentsInput {
+public class GetCommentsInput implements OperationInput {
     //@NotBlank(message = "roomId cannot be blank!")
     private String roomId;
 }
