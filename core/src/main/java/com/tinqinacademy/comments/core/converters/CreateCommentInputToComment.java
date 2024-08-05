@@ -18,6 +18,7 @@ public class CreateCommentInputToComment extends AbstractConverter<CreateComment
                 .comment(source.getContent())
                 .editedByUserId(UUID.randomUUID()) //will be changed later
                 .build();
-        return null;
+
+        return result;
     }
 }
