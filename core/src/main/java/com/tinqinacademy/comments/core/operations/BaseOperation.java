@@ -5,6 +5,7 @@ import com.tinqinacademy.comments.api.errors.Error;
 import com.tinqinacademy.comments.api.errors.ErrorMapper;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
 import com.tinqinacademy.comments.api.exceptions.InvalidInputException;
+import com.tinqinacademy.comments.persistence.repositories.CommentRepository;
 import io.vavr.API;
 import jakarta.validation.ConstraintViolation;
 import lombok.Getter;
