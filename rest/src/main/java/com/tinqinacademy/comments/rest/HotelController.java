@@ -54,6 +54,8 @@ public class HotelController extends BaseController {
     @PatchMapping(RestApiPaths.USER_EDIT_COMMENT)
     public ResponseEntity<?> userEditComment(@PathVariable String commentId,
                                              @RequestBody UserEditCommentInput input) {
+        input.setCommentId(commentId);
+
         Either<ErrorsList, UserEditCommentOutput> result = userEditCommentOperation.process(input);
         return getOutput(result, HttpStatus.OK);
     }

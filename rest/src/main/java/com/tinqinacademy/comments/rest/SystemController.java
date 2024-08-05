@@ -29,6 +29,8 @@ public class SystemController extends BaseController {
     @PutMapping(RestApiPaths.ADMIN_EDIT_COMMENT)
     public ResponseEntity<?> adminEditComment(@PathVariable String commentId,
                                               @RequestBody AdminEditCommentInput input) {
+        input.setCommentId(commentId);
+
         Either<ErrorsList, AdminEditCommentOutput> result = adminEditCommentOperation.process(input);
         return getOutput(result, HttpStatus.OK);
     }
@@ -36,6 +38,8 @@ public class SystemController extends BaseController {
     @DeleteMapping(RestApiPaths.DELETE_COMMENT)
     public ResponseEntity<?> deleteComment(@PathVariable String commentId,
                                            @RequestBody DeleteCommentInput input) {
+        input.setCommentId(commentId);
+
         Either<ErrorsList, DeleteCommentOutput> result = deleteCommentOperation.process(input);
         return getOutput(result, HttpStatus.OK);
     }
