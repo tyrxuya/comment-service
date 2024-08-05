@@ -13,5 +13,5 @@ import lombok.*;
 @ToString
 public class DeleteCommentInput implements OperationInput {
     @NotBlank(message = "roomId cannot be blank!")
-    private String roomId;
+    private String commentId;
 }
