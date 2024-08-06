@@ -11,6 +11,8 @@ import com.tinqinacademy.comments.persistence.repositories.CommentRepository;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
 import jakarta.validation.Validator;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
@@ -40,7 +42,7 @@ public class GetComments extends BaseOperation implements GetCommentsOperation {
 
             validate(input);
 
-            List<Comment> comments = commentRepository.findCommentsByRoomId(UUID.fromString(input.getRoomId()));
+            List<Comment> comments = commentRepository.findCommentsByRoomId(input.getRoomId());
 
             List<CommentsOutput> commentsOutputs = getCommentsOutputsListFromListOfComments(comments);
 

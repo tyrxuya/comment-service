@@ -14,7 +14,7 @@ public class CreateCommentInputToComment extends AbstractConverter<CreateComment
     @Override
     protected Comment doConvert(CreateCommentInput source) {
         Comment result = Comment.builder()
-                .roomNo(source.getRoomId())
+                .roomId(source.getRoomId())
                 .comment(source.getContent())
                 .editedByUserId(UUID.randomUUID()) //will be changed later
                 .build();

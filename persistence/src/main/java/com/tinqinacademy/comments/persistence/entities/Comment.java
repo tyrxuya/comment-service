@@ -27,7 +27,7 @@ public class Comment {
     private UUID userId;
 
     @Column(nullable = false)
-    private String roomNo;
+    private String roomId;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
