@@ -20,6 +20,7 @@
 		<module>api</module>
 		<module>persistence</module>
 		<module>domain</module>
+		<module>restexport</module>
 	</modules>
 
 	<properties>
@@ -32,6 +33,7 @@
 		<flatten.version>1.6.0</flatten.version>
 		<vavr.version>0.10.4</vavr.version>
 		<sbadmin.version>3.3.3</sbadmin.version>
+		<feign-jackson.version>13.3</feign-jackson.version>
 	</properties>
 
 	<dependencies>
@@ -49,6 +51,11 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-jackson</artifactId>
+			<version>${feign-jackson.version}</version>
 		</dependency>
 	</dependencies>
 
