@@ -60,7 +60,7 @@ public class AdminEditComment extends BaseOperation implements AdminEditCommentO
     }
 
     private void editCommentFieldsByInput(Comment comment, AdminEditCommentInput input) {
-        comment.setRoomNo(input.getRoomNo());
+        comment.setRoomId(input.getRoomNo());
         comment.setComment(input.getContent());
         comment.setEditedByUserId(UUID.randomUUID()); //will be changed later
     }

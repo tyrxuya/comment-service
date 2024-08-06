@@ -37,9 +37,7 @@ public class DeleteComment extends BaseOperation implements DeleteCommentOperati
 
             validate(input);
 
-            List<Comment> comments = commentRepository.findCommentsByRoomId(UUID.fromString(input.getRoomId()));
-
-            commentRepository.deleteAll(comments);
+            commentRepository.deleteById(UUID.fromString(input.getCommentId()));
 
             DeleteCommentOutput result = DeleteCommentOutput.builder().build();
 
