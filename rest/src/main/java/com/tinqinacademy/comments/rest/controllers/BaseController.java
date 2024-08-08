@@ -1,4 +1,4 @@
-package com.tinqinacademy.comments.rest;
+package com.tinqinacademy.comments.rest.controllers;
 
 import com.tinqinacademy.comments.api.base.OperationOutput;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
