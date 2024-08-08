@@ -1,5 +1,6 @@
 package com.tinqinacademy.comments.restexport;
 
+import com.tinqinacademy.comments.api.CommentsFeignClientApiPaths;
 import com.tinqinacademy.comments.api.operations.admineditcomment.AdminEditCommentInput;
 import com.tinqinacademy.comments.api.operations.admineditcomment.AdminEditCommentOutput;
 import com.tinqinacademy.comments.api.operations.createcomment.CreateCommentInput;
@@ -17,22 +18,22 @@ import feign.RequestLine;
         "Content-Type: application/json"
 })
 public interface CommentsRestExport {
-    @RequestLine("GET /api/v1/hotel/{roomId}/comment")
+    @RequestLine(CommentsFeignClientApiPaths.GET_COMMENTS)
     GetCommentsOutput getComments(@Param String roomId);
 
-    @RequestLine("POST /api/v1/hotel{roomId}/comment")
+    @RequestLine(CommentsFeignClientApiPaths.CREATE_COMMENT)
     CreateCommentOutput createComment(@Param String roomId,
                                       CreateCommentInput input);
 
-    @RequestLine("PATCH /api/v1/hotel/comment/{commentId}")
+    @RequestLine(CommentsFeignClientApiPaths.USER_EDIT_COMMENT)
     UserEditCommentOutput userEditComment(@Param String commentId,
                                           UserEditCommentInput input);
 
-    @RequestLine("PUT /api/v1/system/comment/{commentId}")
+    @RequestLine(CommentsFeignClientApiPaths.ADMIN_EDIT_COMMENT)
     AdminEditCommentOutput adminEditComment(@Param String commentId,
                                             AdminEditCommentInput input);
 
-    @RequestLine("DELETE /api/v1/system/comment/{commentId}")
+    @RequestLine(CommentsFeignClientApiPaths.DELETE_COMMENT)
     DeleteCommentOutput deleteComment(@Param String commentId,
                                       DeleteCommentInput input);
 }
