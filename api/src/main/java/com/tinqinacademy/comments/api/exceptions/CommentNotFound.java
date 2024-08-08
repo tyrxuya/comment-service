@@ -1,6 +1,6 @@
 package com.tinqinacademy.comments.api.exceptions;
 
-import lombok.AllArgsConstructor;
+import com.tinqinacademy.comments.api.ExceptionMessages;
 import lombok.Getter;
 import lombok.Setter;
 

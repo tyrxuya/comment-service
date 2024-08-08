@@ -1,6 +1,7 @@
-package com.tinqinacademy.comments.rest;
+package com.tinqinacademy.comments.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tinqinacademy.comments.api.CommentsRestApiPaths;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
 import com.tinqinacademy.comments.api.operations.admineditcomment.AdminEditCommentInput;
 import com.tinqinacademy.comments.api.operations.admineditcomment.AdminEditCommentOperation;
@@ -10,7 +11,6 @@ import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentOper
 import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentOutput;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.vavr.control.Either;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class SystemController extends BaseController {
     private final DeleteCommentOperation deleteCommentOperation;
     private final ObjectMapper objectMapper;
 
-    @PutMapping(RestApiPaths.ADMIN_EDIT_COMMENT)
+    @PutMapping(CommentsRestApiPaths.ADMIN_EDIT_COMMENT)
     public ResponseEntity<?> adminEditComment(@PathVariable String commentId,
                                               @RequestBody AdminEditCommentInput input) {
         input.setCommentId(commentId);
@@ -35,7 +35,7 @@ public class SystemController extends BaseController {
         return getOutput(result, HttpStatus.OK);
     }
 
-    @DeleteMapping(RestApiPaths.DELETE_COMMENT)
+    @DeleteMapping(CommentsRestApiPaths.DELETE_COMMENT)
     public ResponseEntity<?> deleteComment(@PathVariable String commentId,
                                            @RequestBody DeleteCommentInput input) {
         input.setCommentId(commentId);

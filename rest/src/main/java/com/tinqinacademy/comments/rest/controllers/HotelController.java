@@ -1,6 +1,7 @@
-package com.tinqinacademy.comments.rest;
+package com.tinqinacademy.comments.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tinqinacademy.comments.api.CommentsRestApiPaths;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
 import com.tinqinacademy.comments.api.operations.createcomment.CreateCommentInput;
 import com.tinqinacademy.comments.api.operations.createcomment.CreateCommentOperation;
@@ -14,7 +15,6 @@ import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditComment
 import io.vavr.control.Either;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class HotelController extends BaseController {
     private final UserEditCommentOperation userEditCommentOperation;
     private final ObjectMapper objectMapper;
 
-    @GetMapping(RestApiPaths.GET_COMMENT)
+    @GetMapping(CommentsRestApiPaths.GET_COMMENT)
     public ResponseEntity<?> getComments(@PathVariable String roomId) {
         GetCommentsInput input = GetCommentsInput.builder()
                 .roomId(roomId)
@@ -39,7 +39,7 @@ public class HotelController extends BaseController {
         return getOutput(result, HttpStatus.OK);
     }
 
-    @PostMapping(RestApiPaths.CREATE_COMMENT)
+    @PostMapping(CommentsRestApiPaths.CREATE_COMMENT)
     public ResponseEntity<?> createComment(@PathVariable String roomId,
                                            @RequestBody CreateCommentInput input) {
         input = input.toBuilder()
@@ -51,7 +51,7 @@ public class HotelController extends BaseController {
         return getOutput(result, HttpStatus.CREATED);
     }
 
-    @PatchMapping(RestApiPaths.USER_EDIT_COMMENT)
+    @PatchMapping(CommentsRestApiPaths.USER_EDIT_COMMENT)
     public ResponseEntity<?> userEditComment(@PathVariable String commentId,
                                              @RequestBody UserEditCommentInput input) {
         input.setCommentId(commentId);
