@@ -33,15 +33,16 @@ public class DeleteComment extends BaseOperation implements DeleteCommentOperati
     @Override
     public Either<ErrorsList, DeleteCommentOutput> process(DeleteCommentInput input) {
         return Try.of(() -> {
-            log.info("start process input: {}", input);
+            log.info("Start process method in DeleteCommentOperation. Input: {}", input);
 
             validate(input);
 
             commentRepository.deleteById(UUID.fromString(input.getCommentId()));
+            log.info("Comment with id {} deleted from repository.", input.getCommentId());
 
             DeleteCommentOutput result = DeleteCommentOutput.builder().build();
 
-            log.info("end process result: {}", result);
+            log.info("End process method in DeleteCommentOperation. Result: {}", result);
 
             return result;
         })

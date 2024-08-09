@@ -31,19 +31,20 @@ public class CreateComment extends BaseOperation implements CreateCommentOperati
     @Override
     public Either<ErrorsList, CreateCommentOutput> process(CreateCommentInput input) {
         return Try.of(() -> {
-            log.info("start process input: {}", input);
+            log.info("Start process method in CreateCommentOperation. Input: {}", input);
 
             validate(input);
 
             Comment comment = conversionService.convert(input, Comment.class);
 
             commentRepository.save(comment);
+            log.info("Comment {} saved in repository.", comment);
 
             CreateCommentOutput result = CreateCommentOutput.builder()
                     .id(comment.getId().toString())
                     .build();
 
-            log.info("end process result: {}", result);
+            log.info("End process method in CreateCommentOperation. Result: {}", result);
 
             return result;
         })
