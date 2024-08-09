@@ -34,21 +34,24 @@ public class AdminEditComment extends BaseOperation implements AdminEditCommentO
     @Override
     public Either<ErrorsList, AdminEditCommentOutput> process(AdminEditCommentInput input) {
         return Try.of(() -> {
-            log.info("start process input: {}", input);
+            log.info("Start process method in AdminEditCommentOperation. Input: {}", input);
 
             validate(input);
 
             Comment comment = findCommentByInputId(input);
+            log.info("Comment {} found", comment);
 
             editCommentFieldsByInput(comment, input);
+            log.info("Comment fields updated");
 
             commentRepository.save(comment);
+            log.info("Comment saved in repository");
 
             AdminEditCommentOutput result = AdminEditCommentOutput.builder()
                     .id(comment.getId().toString())
                     .build();
 
-            log.info("end process result: {}", result);
+            log.info("End process method in AdminEditCommentOperation. Result: {}", result);
 
             return result;
                 })
@@ -60,13 +63,16 @@ public class AdminEditComment extends BaseOperation implements AdminEditCommentO
     }
 
     private void editCommentFieldsByInput(Comment comment, AdminEditCommentInput input) {
-        comment.setRoomNo(input.getRoomNo());
+        comment.setRoomId(input.getRoomNo());
         comment.setComment(input.getContent());
         comment.setEditedByUserId(UUID.randomUUID()); //will be changed later
     }
 
     private Comment findCommentByInputId(AdminEditCommentInput input) {
         return commentRepository.findById(UUID.fromString(input.getCommentId()))
-                .orElseThrow(CommentNotFound::new);
+                .orElseThrow(() -> {
+                    log.warn("Comment with id {} not found", input.getCommentId());
+                    return new CommentNotFound();
+                });
     }
 }

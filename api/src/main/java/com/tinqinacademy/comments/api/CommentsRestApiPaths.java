@@ -1,6 +1,6 @@
-package com.tinqinacademy.comments.rest;
+package com.tinqinacademy.comments.api;
 
-public final class RestApiPaths {
+public final class CommentsRestApiPaths {
     public static final String BASIC = "/api/v1";
     public static final String HOTEL = BASIC + "/hotel";
     public static final String SYSTEM = BASIC + "/system";

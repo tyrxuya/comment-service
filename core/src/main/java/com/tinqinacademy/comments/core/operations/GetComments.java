@@ -11,6 +11,8 @@ import com.tinqinacademy.comments.persistence.repositories.CommentRepository;
 import io.vavr.control.Either;
 import io.vavr.control.Try;
 import jakarta.validation.Validator;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
@@ -36,19 +38,21 @@ public class GetComments extends BaseOperation implements GetCommentsOperation {
     @Override
     public Either<ErrorsList, GetCommentsOutput> process(GetCommentsInput input) {
         return Try.of(() -> {
-            log.info("start process input: {}", input);
+            log.info("Start process method in GetCommentsOperation. Input: {}", input);
 
             validate(input);
 
-            List<Comment> comments = commentRepository.findCommentsByRoomId(UUID.fromString(input.getRoomId()));
+            List<Comment> comments = commentRepository.findCommentsByRoomId(input.getRoomId());
+            log.info("Comments found: {}", comments);
 
             List<CommentsOutput> commentsOutputs = getCommentsOutputsListFromListOfComments(comments);
+            log.info("Converted from Comment to CommentsOutput");
 
             GetCommentsOutput result = GetCommentsOutput.builder()
                     .comments(commentsOutputs)
                     .build();
 
-            log.info("end process result: {}", result);
+            log.info("End process method in GetCommentsOperation. Result: {}", result);
 
             return result;
         })
