@@ -33,21 +33,23 @@ public class UserEditComment extends BaseOperation implements UserEditCommentOpe
     @Override
     public Either<ErrorsList, UserEditCommentOutput> process(UserEditCommentInput input) {
         return Try.of(() -> {
-                    log.info("start process input: {}", input);
+                    log.info("Start process method in UserEditCommentOperation. Input: {}", input);
 
                     validate(input);
 
                     Comment comment = findCommentByInputId(input);
+                    log.info("Comment {} found.", comment);
 
                     comment.setComment(input.getContent());
 
                     commentRepository.save(comment);
+                    log.info("Comment {} saved.", comment);
 
                     UserEditCommentOutput result = UserEditCommentOutput.builder()
                             .id(comment.getId().toString())
                             .build();
 
-                    log.info("end process result: {}", result);
+                    log.info("End process method in UserEditCommentOperation. Result: {}", result);
 
                     return result;
                 })
@@ -59,6 +61,9 @@ public class UserEditComment extends BaseOperation implements UserEditCommentOpe
 
     private Comment findCommentByInputId(UserEditCommentInput input) {
         return commentRepository.findById(UUID.fromString(input.getCommentId()))
-                .orElseThrow(CommentNotFound::new);
+                .orElseThrow(() -> {
+                    log.warn("Comment with id {} not found.", input.getCommentId());
+                    return new CommentNotFound();
+                });
     }
 }
