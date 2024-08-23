@@ -3,6 +3,7 @@ package com.tinqinacademy.comments.core.operations;
 import com.tinqinacademy.comments.api.errors.ErrorMapper;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
 import com.tinqinacademy.comments.api.exceptions.CommentNotFound;
+import com.tinqinacademy.comments.api.exceptions.WrongUserException;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentInput;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentOperation;
 import com.tinqinacademy.comments.api.operations.usereditcomment.UserEditCommentOutput;
@@ -40,13 +41,16 @@ public class UserEditComment extends BaseOperation implements UserEditCommentOpe
                     Comment comment = findCommentByInputId(input);
                     log.info("Comment {} found.", comment);
 
+                    checkIsEditPossible(input, comment);
+
                     comment.setComment(input.getContent());
+                    comment.setLastEditedBy(UUID.fromString(input.getUserId()));
 
                     commentRepository.save(comment);
                     log.info("Comment {} saved.", comment);
 
                     UserEditCommentOutput result = UserEditCommentOutput.builder()
-                            .id(comment.getId().toString())
+                            .commentId(comment.getId().toString())
                             .build();
 
                     log.info("End process method in UserEditCommentOperation. Result: {}", result);
@@ -57,6 +61,12 @@ public class UserEditComment extends BaseOperation implements UserEditCommentOpe
                 .mapLeft(throwable -> Match(throwable).of(
                         defaultCase(throwable, HttpStatus.I_AM_A_TEAPOT)
                 ));
+    }
+
+    private void checkIsEditPossible(UserEditCommentInput input, Comment comment) {
+        if (!comment.getUserId().toString().equals(input.getUserId())) {
+            throw new WrongUserException();
+        }
     }
 
     private Comment findCommentByInputId(UserEditCommentInput input) {

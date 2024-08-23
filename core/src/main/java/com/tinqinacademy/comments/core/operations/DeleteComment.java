@@ -2,6 +2,7 @@ package com.tinqinacademy.comments.core.operations;
 
 import com.tinqinacademy.comments.api.errors.ErrorMapper;
 import com.tinqinacademy.comments.api.errors.ErrorsList;
+import com.tinqinacademy.comments.api.exceptions.CommentNotFound;
 import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentInput;
 import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentOperation;
 import com.tinqinacademy.comments.api.operations.deletecomment.DeleteCommentOutput;
@@ -37,10 +38,13 @@ public class DeleteComment extends BaseOperation implements DeleteCommentOperati
 
             validate(input);
 
-            commentRepository.deleteById(UUID.fromString(input.getCommentId()));
+            Comment comment = getCommentByInput(input);
+
+            commentRepository.delete(comment);
+
             log.info("Comment with id {} deleted from repository.", input.getCommentId());
 
-            DeleteCommentOutput result = DeleteCommentOutput.builder().build();
+            DeleteCommentOutput result = conversionService.convert(comment, DeleteCommentOutput.class);
 
             log.info("End process method in DeleteCommentOperation. Result: {}", result);
 
@@ -50,5 +54,10 @@ public class DeleteComment extends BaseOperation implements DeleteCommentOperati
                 .mapLeft(throwable -> Match(throwable).of(
                         defaultCase(throwable, HttpStatus.I_AM_A_TEAPOT)
                 ));
+    }
+
+    private Comment getCommentByInput(DeleteCommentInput input) {
+        return commentRepository.findById(UUID.fromString(input.getCommentId()))
+                .orElseThrow(CommentNotFound::new);
     }
 }

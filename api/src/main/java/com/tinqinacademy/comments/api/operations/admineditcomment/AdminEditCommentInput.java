@@ -1,11 +1,13 @@
 package com.tinqinacademy.comments.api.operations.admineditcomment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tinqinacademy.comments.api.base.OperationInput;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,13 +16,12 @@ import lombok.*;
 @Builder
 @ToString
 public class AdminEditCommentInput implements OperationInput {
-    @Schema(example = "10021")
-    @NotBlank(message = "commentId cannot be blank!")
+    @JsonIgnore
+    @UUID(message = "commentId must be a valid UUID")
     private String commentId;
 
-    @Schema(example = "100b")
-    @NotBlank(message = "roomNo cannot be blank!")
-    private String roomNo;
+    @UUID(message = "roomId must be a valid UUID")
+    private String roomId;
 
     @Schema(example = "vanio")
     @NotBlank(message = "firstName cannot be blank!")
@@ -36,4 +37,8 @@ public class AdminEditCommentInput implements OperationInput {
     @NotBlank(message = "content cannot be blank!")
     @Size(min = 1, max = 200, message = "content cannot be over 200 symbols!")
     private String content;
+
+    @UUID(message = "userId must be a valid UUID")
+    @NotBlank(message = "userId cannot be blank")
+    private String userId;
 }

@@ -2,7 +2,9 @@ package com.tinqinacademy.comments.core.converters;
 
 import com.tinqinacademy.comments.api.operations.comments.CommentsOutput;
 import com.tinqinacademy.comments.persistence.entities.Comment;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CommentToCommentOutput extends AbstractConverter<Comment, CommentsOutput> {
     @Override
     protected Class<CommentsOutput> getTargetClass() {
@@ -12,10 +14,12 @@ public class CommentToCommentOutput extends AbstractConverter<Comment, CommentsO
     @Override
     protected CommentsOutput doConvert(Comment source) {
         CommentsOutput result = CommentsOutput.builder()
-                .id(source.getId().toString())
+                .commentId(source.getId().toString())
                 .content(source.getComment())
                 .publishDate(source.getPublishedDate().toLocalDate())
-                .lastEditedBy(source.getEditedByUserId().toString())
+                .lastEditedDate(source.getLastEditTime().toLocalDate())
+                .lastEditedBy(String.valueOf(source.getLastEditedBy()))
+                .userId(source.getUserId().toString())
                 .build();
 
         return result;

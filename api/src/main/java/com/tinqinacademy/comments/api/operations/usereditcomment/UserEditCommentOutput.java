@@ -12,5 +12,5 @@ import lombok.*;
 @ToString
 public class UserEditCommentOutput implements OperationOutput {
     //@NotBlank(message = "id cannot be blank!")
-    private String id;
+    private String commentId;
 }

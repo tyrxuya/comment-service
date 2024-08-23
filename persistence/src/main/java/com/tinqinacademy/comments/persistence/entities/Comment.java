@@ -3,6 +3,8 @@ package com.tinqinacademy.comments.persistence.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,15 +29,15 @@ public class Comment {
     private UUID userId;
 
     @Column(nullable = false)
-    private String roomId;
+    private UUID roomId;
 
-    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreationTimestamp
     private LocalDateTime publishedDate;
 
-    @Column()
-    private LocalDateTime lastEditTime = LocalDateTime.now();
+    @UpdateTimestamp
+    private LocalDateTime lastEditTime;
 
-    @Column()
-    private UUID editedByUserId;
+    @Column
+    private UUID lastEditedBy;
 }

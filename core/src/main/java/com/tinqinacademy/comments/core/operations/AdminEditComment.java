@@ -48,7 +48,7 @@ public class AdminEditComment extends BaseOperation implements AdminEditCommentO
             log.info("Comment saved in repository");
 
             AdminEditCommentOutput result = AdminEditCommentOutput.builder()
-                    .id(comment.getId().toString())
+                    .commentId(comment.getId().toString())
                     .build();
 
             log.info("End process method in AdminEditCommentOperation. Result: {}", result);
@@ -63,9 +63,9 @@ public class AdminEditComment extends BaseOperation implements AdminEditCommentO
     }
 
     private void editCommentFieldsByInput(Comment comment, AdminEditCommentInput input) {
-        comment.setRoomId(input.getRoomNo());
+        comment.setRoomId(UUID.fromString(input.getRoomId()));
         comment.setComment(input.getContent());
-        comment.setEditedByUserId(UUID.randomUUID()); //will be changed later
+        comment.setLastEditedBy(UUID.fromString(input.getUserId()));
     }
 
     private Comment findCommentByInputId(AdminEditCommentInput input) {

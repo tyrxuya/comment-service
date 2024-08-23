@@ -14,6 +14,5 @@ import java.util.List;
 @Builder
 @ToString
 public class GetCommentsOutput implements OperationOutput {
-    //@Valid
     private List<CommentsOutput> comments;
 }

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.validator.constraints.UUID;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentsInput implements OperationInput {
     @NotBlank(message = "id cannot be blank!")
-    private String id;
+    @UUID(message = "commentId must be a valid UUID")
+    private String commentId;
 
     @NotBlank(message = "firstName cannot be blank!")
     @Size(min = 2, max = 50, message = "firstName must be between 2 and 50 symbols!")
@@ -35,7 +37,4 @@ public class CommentsInput implements OperationInput {
 
     @Future(message = "invalid lastEditedDate!")
     private LocalDateTime lastEditedDate;
-
-    @NotBlank(message = "lastEditedBy cannot be blank!")
-    private String lastEditedBy;
 }
