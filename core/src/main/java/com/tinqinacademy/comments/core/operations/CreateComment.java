@@ -41,7 +41,7 @@ public class CreateComment extends BaseOperation implements CreateCommentOperati
             log.info("Comment {} saved in repository.", comment);
 
             CreateCommentOutput result = CreateCommentOutput.builder()
-                    .id(comment.getId().toString())
+                    .commentId(comment.getId().toString())
                     .build();
 
             log.info("End process method in CreateCommentOperation. Result: {}", result);
