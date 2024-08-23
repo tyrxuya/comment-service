@@ -11,5 +11,5 @@ import lombok.*;
 @Builder
 @ToString
 public class AdminEditCommentOutput implements OperationOutput {
-    private String id;
+    private String commentId;
 }
