@@ -41,6 +41,7 @@ public class DeleteComment extends BaseOperation implements DeleteCommentOperati
             Comment comment = getCommentByInput(input);
 
             commentRepository.delete(comment);
+
             log.info("Comment with id {} deleted from repository.", input.getCommentId());
 
             DeleteCommentOutput result = conversionService.convert(comment, DeleteCommentOutput.class);

@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "System REST APIs")
-@Validated
 public class SystemController extends BaseController {
     private final AdminEditCommentOperation adminEditCommentOperation;
     private final DeleteCommentOperation deleteCommentOperation;
