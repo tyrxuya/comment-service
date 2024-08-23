@@ -42,7 +42,7 @@ public class GetComments extends BaseOperation implements GetCommentsOperation {
 
             validate(input);
 
-            List<Comment> comments = commentRepository.findCommentsByRoomId(input.getRoomId());
+            List<Comment> comments = commentRepository.findCommentsByRoomId(UUID.fromString(input.getRoomId()));
             log.info("Comments found: {}", comments);
 
             List<CommentsOutput> commentsOutputs = getCommentsOutputsListFromListOfComments(comments);
