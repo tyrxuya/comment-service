@@ -57,8 +57,8 @@ public class AdminEditComment extends BaseOperation implements AdminEditCommentO
                 })
                 .toEither()
                 .mapLeft(throwable -> Match(throwable).of(
-                        customCase(throwable, HttpStatus.NOT_FOUND, CommentNotFound.class),
-                        defaultCase(throwable, HttpStatus.I_AM_A_TEAPOT)
+                        validateCase(throwable, HttpStatus.BAD_REQUEST),
+                        customCase(throwable, HttpStatus.NOT_FOUND, CommentNotFound.class)
                 ));
     }
 

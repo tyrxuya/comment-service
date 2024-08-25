@@ -50,7 +50,7 @@ public class CreateComment extends BaseOperation implements CreateCommentOperati
         })
                 .toEither()
                 .mapLeft(throwable -> Match(throwable).of(
-                        defaultCase(throwable, HttpStatus.I_AM_A_TEAPOT)
+                        validateCase(throwable, HttpStatus.BAD_REQUEST)
                 ));
     }
 }

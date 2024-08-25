@@ -34,32 +34,34 @@ public class UserEditComment extends BaseOperation implements UserEditCommentOpe
     @Override
     public Either<ErrorsList, UserEditCommentOutput> process(UserEditCommentInput input) {
         return Try.of(() -> {
-                    log.info("Start process method in UserEditCommentOperation. Input: {}", input);
+            log.info("Start process method in UserEditCommentOperation. Input: {}", input);
 
-                    validate(input);
+            validate(input);
 
-                    Comment comment = findCommentByInputId(input);
-                    log.info("Comment {} found.", comment);
+            Comment comment = findCommentByInputId(input);
+            log.info("Comment {} found.", comment);
 
-                    checkIsEditPossible(input, comment);
+            checkIsEditPossible(input, comment);
 
-                    comment.setComment(input.getContent());
-                    comment.setLastEditedBy(UUID.fromString(input.getUserId()));
+            comment.setComment(input.getContent());
+            comment.setLastEditedBy(UUID.fromString(input.getUserId()));
 
-                    commentRepository.save(comment);
-                    log.info("Comment {} saved.", comment);
+            commentRepository.save(comment);
+            log.info("Comment {} saved.", comment);
 
-                    UserEditCommentOutput result = UserEditCommentOutput.builder()
-                            .commentId(comment.getId().toString())
-                            .build();
+            UserEditCommentOutput result = UserEditCommentOutput.builder()
+                    .commentId(comment.getId().toString())
+                    .build();
 
-                    log.info("End process method in UserEditCommentOperation. Result: {}", result);
+            log.info("End process method in UserEditCommentOperation. Result: {}", result);
 
-                    return result;
-                })
+            return result;
+        })
                 .toEither()
                 .mapLeft(throwable -> Match(throwable).of(
-                        defaultCase(throwable, HttpStatus.I_AM_A_TEAPOT)
+                        validateCase(throwable, HttpStatus.BAD_REQUEST),
+                        customCase(throwable, HttpStatus.FORBIDDEN, WrongUserException.class),
+                        customCase(throwable, HttpStatus.NOT_FOUND, CommentNotFound.class)
                 ));
     }
 

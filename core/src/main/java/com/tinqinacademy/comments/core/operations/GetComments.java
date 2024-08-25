@@ -59,7 +59,7 @@ public class GetComments extends BaseOperation implements GetCommentsOperation {
         })
                 .toEither()
                 .mapLeft(throwable -> Match(throwable).of(
-                        defaultCase(throwable, HttpStatus.I_AM_A_TEAPOT)
+                        validateCase(throwable, HttpStatus.BAD_REQUEST)
                 ));
     }
 
