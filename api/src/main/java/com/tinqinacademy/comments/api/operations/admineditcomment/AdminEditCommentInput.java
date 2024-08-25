@@ -21,6 +21,7 @@ public class AdminEditCommentInput implements OperationInput {
     private String commentId;
 
     @UUID(message = "roomId must be a valid UUID")
+    @NotBlank(message = "roomId cant be blank")
     private String roomId;
 
     @Schema(example = "vanio")
