@@ -17,7 +17,7 @@ import feign.RequestLine;
 @Headers({
         "Content-Type: application/json"
 })
-public interface CommentsRestExport {
+public interface CommentsClient {
     @RequestLine(CommentsFeignClientApiPaths.GET_COMMENTS)
     GetCommentsOutput getComments(@Param String roomId);
 
@@ -34,6 +34,5 @@ public interface CommentsRestExport {
                                             AdminEditCommentInput input);
 
     @RequestLine(CommentsFeignClientApiPaths.DELETE_COMMENT)
-    DeleteCommentOutput deleteComment(@Param String commentId,
-                                      DeleteCommentInput input);
+    DeleteCommentOutput deleteComment(@Param String commentId);
 }
